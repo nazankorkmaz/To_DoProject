@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+
+
 // Lombok
 @RequiredArgsConstructor
 @Log4j2
 // API (REST)
 @RestController
-@RequestMapping("/role/api/v1.0.0")
+@RequestMapping("/api/v1.0.0")
 @CrossOrigin //CORS: Hatası
 public class TaskApiImpl implements ITaskApi<TaskDto> {
 
@@ -34,10 +36,41 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
     private ApiResult apiResult;
 
 
-    // CREATE Role(Api)
-    // http://localhost:4444/role/api/v1.0.0/create
+    // CREATE (Api)
+    // http://localhost:4444/api/v1.0.0/create
     @PostMapping("/create")
     @Override
+    public ResponseEntity<?> taskApiCreate(@RequestBody TaskDto taskDto) {
+
+        //taskDto.setCompleted("false"); // Default value
+        //taskDto.setCreatedAt(new Date()); // Current date
+
+        TaskDto taskCreateApi =(TaskDto) iTaskService.taskServiceCreate(taskDto);//.taskServiceCreate(taskDto);
+
+        if (taskCreateApi == null) {
+            ApiResult apiResultCreate = ApiResult.builder()
+                    .status(404)
+                    .error("Task Eklenmedi")
+                    .message("Task Dto bulunmadı")
+                    .path("localhost:4444/api/v1.0.0/create")
+                    .createdDate(new Date(System.currentTimeMillis()))
+                    .build();
+            return ResponseEntity.status(404).body(apiResultCreate);
+        } else if (taskCreateApi.getTaskId() == 0) {
+            ApiResult apiResultCreate = ApiResult.builder()
+                    .status(400)
+                    .error("Task Eklenmedi")
+                    .message("Task Dto Bad Request")
+                    .path("localhost:4444/api/v1.0.0/create")
+                    .createdDate(new Date(System.currentTimeMillis()))
+                    .build();
+            return ResponseEntity.status(400).body(apiResultCreate);
+        }
+        log.info("Task Api eklendi");
+        return ResponseEntity.status(201).body(taskCreateApi);
+    }
+
+    /*
     public ResponseEntity<?> taskApiCreate(TaskDto taskDto) {
         TaskDto taskCreateApi=(TaskDto)iTaskService.taskServiceCreate(taskDto);
 
@@ -47,7 +80,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
                     .status(404)
                     .error("Task Eklenmedi")
                     .message("Task Dto bulunmadı")
-                    .path("localhost:4444/role/api/v1.0.0/create")
+                    .path("localhost:4444/api/v1.0.0/create")
                     .createdDate(new Date(System.currentTimeMillis()))
                     .build();
             return ResponseEntity.status(404).body(apiResultCreate);
@@ -57,7 +90,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
                     .status(400)
                     .error("Task Eklenmedi")
                     .message("Task Dto Bad Request")
-                    .path("localhost:4444/role/api/v1.0.0/create")
+                    .path("localhost:4444/api/v1.0.0/create")
                     .createdDate(new Date(System.currentTimeMillis()))
                     .build();
             return ResponseEntity.status(400).body(apiResultCreate);
@@ -66,6 +99,8 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.status(201).body(iTaskService.taskServiceCreate(taskDto));
 
     }
+
+     */
 
 
     @GetMapping("/list")
@@ -86,7 +121,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
                     .status(404)
                     .error("Task Bulunamadı")
                     .message("Task Dto bulunmadı")
-                    .path("localhost:4444/role/api/v1.0.0/find")
+                    .path("localhost:4444/api/v1.0.0/find")
                     .createdDate(new Date(System.currentTimeMillis()))
                     .build();
             return ResponseEntity.status(404).body(apiResultFind);
@@ -98,7 +133,10 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
 
     @Override
     @PutMapping({"/update","/update/{id}"})
+
+
     public ResponseEntity<?> taskApiUpdateById(@PathVariable(name="id",required = false)Long id, @Valid @RequestBody TaskDto taskDto) {
+        /*
         TaskDto taskUpdateApi=( TaskDto)iTaskService.taskServiceUpdateById(id,taskDto);
         if(taskUpdateApi==null){
             // Eğer kaydederken null değer gelirse
@@ -106,13 +144,28 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
                     .status(404)
                     .error("Task Bulunamadı")
                     .message("Task Dto bulunmadı")
-                    .path("localhost:4444/role/api/v1.0.0/update")
+                    .path("localhost:4444/api/v1.0.0/update")
                     .createdDate(new Date(System.currentTimeMillis()))
                     .build();
             return ResponseEntity.status(404).body(apiResultFind);
         }
         log.info("Task Api Güncellendi");
         return ResponseEntity.ok(iTaskService.taskServiceUpdateById(id,taskDto));
+
+         */
+        TaskDto taskUpdateApi = ( TaskDto)iTaskService.taskServiceUpdateById(id, taskDto);
+        if (taskUpdateApi == null) {
+            ApiResult apiResultFind = ApiResult.builder()
+                    .status(404)
+                    .error("Task Bulunamadı")
+                    .message("Task Dto bulunmadı")
+                    .path("localhost:4444/api/v1.0.0/update")
+                    .createdDate(new Date(System.currentTimeMillis()))
+                    .build();
+            return ResponseEntity.status(404).body(apiResultFind);
+        }
+        log.info("Task Api Güncellendi");
+        return ResponseEntity.ok(taskUpdateApi);
     }
 
 
@@ -122,4 +175,25 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         iTaskService.taskServiceDeleteById(id);
         return new ResponseEntity<>("The task deleted successfully.", HttpStatus.OK);
     }
+
+
+    @Override
+    @PutMapping("/update/completion/{id}")
+    public ResponseEntity<?> updateTaskCompletionStatus(@PathVariable(name="id") Long id, @RequestBody boolean isCompleted,@Valid @RequestBody TaskDto taskDto) {
+        TaskDto updatedTask = (TaskDto) iTaskService.updateTaskCompletionStatus(id, isCompleted, taskDto);
+        if (updatedTask == null) {
+            ApiResult apiResultFind = ApiResult.builder()
+                    .status(404)
+                    .error("Task Bulunamadı")
+                    .message("Task Dto bulunmadı")
+                    .path("localhost:4444/api/v1.0.0/update/completion")
+                    .createdDate(new Date(System.currentTimeMillis()))
+                    .build();
+            return ResponseEntity.status(404).body(apiResultFind);
+        }
+        log.info("Task completion status updated");
+        return ResponseEntity.ok(updatedTask);
+    }
+
+
 }

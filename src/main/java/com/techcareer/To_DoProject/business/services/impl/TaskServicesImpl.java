@@ -52,7 +52,7 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         TaskEntity roleEntity1;
         // Dto => Entity çevirmek
         roleEntity1 = dtoToEntity(taskDto);
-        roleEntity1.setTaskName(roleEntity1.getTaskName().toUpperCase());
+        roleEntity1.setTaskName(roleEntity1.getTaskName());
         // Kaydetmek
         TaskEntity roleEntity2 = taskRepository.save(roleEntity1);
         // ID ve Date Dto üzerinde Set yapıyorum
@@ -97,11 +97,21 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
     @Override
     public TaskDto taskServiceUpdateById(Long id, TaskDto taskDto) {
+        /*
         TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         task.setTaskName(taskDto.getTaskName());
         task.setCompleted(taskDto.isCompleted());
+
         TaskEntity updatedTask = taskRepository.save(task);
 
+        return entityToDto(updatedTask);
+
+         */
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+        task.setTaskName(taskDto.getTaskName());
+        task.setCompleted(taskDto.isCompleted());
+        TaskEntity updatedTask = taskRepository.save(task);
         return entityToDto(updatedTask);
     }
 
@@ -109,6 +119,16 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
     public void taskServiceDeleteById(Long id) {
         TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         taskRepository.delete(task);
+    }
+
+    @Override
+    @Transactional
+    public TaskDto updateTaskCompletionStatus(Long id, Boolean completed, TaskDto taskDto) {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+        task.setCompleted(taskDto.isCompleted());
+        TaskEntity updatedTask = taskRepository.save(task);
+        return entityToDto(updatedTask);
     }
 
 

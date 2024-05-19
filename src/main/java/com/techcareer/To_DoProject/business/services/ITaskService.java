@@ -24,6 +24,7 @@ public interface ITaskService <D, E>{
 
     public void taskServiceDeleteById(Long id);
 
+    public D updateTaskCompletionStatus(Long id, Boolean completed, D d);
 }
 
 

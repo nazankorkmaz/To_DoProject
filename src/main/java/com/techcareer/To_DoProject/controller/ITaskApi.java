@@ -19,4 +19,5 @@ public interface ITaskApi <D>{
 
     public ResponseEntity<String> taskApiDeleteById(Long id);
 
+    public ResponseEntity<?> updateTaskCompletionStatus(Long id,boolean isCompleted, D d );
 }

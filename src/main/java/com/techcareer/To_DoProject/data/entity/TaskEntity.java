@@ -13,7 +13,7 @@ import java.util.Date;
 
 // LOMBOK
 @Data  //burada getter setterlar var
-@AllArgsConstructor  //Parametreli constructorler silinir
+//@AllArgsConstructor  //Parametreli constructorler silinir
 @NoArgsConstructor   //parametresiz constructor silinir
 @Log4j2 //loglama için cağırılır
 @Builder //design pattern yapısı için
@@ -36,8 +36,13 @@ public class TaskEntity implements Serializable {
     @Column(name = "task_name")
     private String taskName;
 
-
+    /*
+    @Column(name = "is_completed")
     private boolean isCompleted;
+*/
+    @Column(name = "completed")
+    private boolean completed;
+
 
 
     //System Created Date
@@ -45,12 +50,27 @@ public class TaskEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP) //zaman sn dk falan versin
     private Date systemCreatedDate;
 
+    public TaskEntity(Long taskId, String taskName, boolean completed, Date systemCreatedDate) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.completed = false;
+        this.systemCreatedDate = systemCreatedDate;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public String toString() {
         return String.format("TaskEntity{" +
                 "taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
-                ", isCompleted=" + isCompleted +
+                ", isCompleted=" + completed +
                 ", systemCreatedDate=" + systemCreatedDate +
                 '}');
     }
