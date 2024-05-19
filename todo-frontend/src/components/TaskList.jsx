@@ -164,46 +164,47 @@ function TaskList() {
     return (
         <div>
             <div className="container mt-5">
-                <h1>TodoInput</h1>
-
-                <form onSubmit={onSubmitForm}>
-                    <div className="form-group">
-                        <label htmlFor="taskName">Task Name</label>
+            <div className="card" style={{ border: '1px solid #dee2e6', borderRadius: '5px' }}>
+                <div className="card-body">
+                    <h1 className="text-center display-5 mb-5">TodoInput</h1>
+                        <form onSubmit={onSubmitForm}>
+                        <div className="form-group" style={{ padding: '8px', borderRadius: '5px', border: '1px solid #dee2e6' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <i className="fa-solid fa-book" style={{ marginRight: '8px' }} />
                         <input
                             type="text"
                             className={inputInvalidErrorClass}
                             id="taskName"
                             name="taskName"
                             autoFocus={true}
-                            placeholder="Enter Task Name"
+                            placeholder="New Todo"
                             required={true}
                             onChange={taskNameOnChange}
                             value={taskName}
+                            style={{  flex: 1, backgroundColor: 'transparent' }}
                         />
-                        {error ? <div className="invalid-feedback">{error.taskName}</div> : ""}
                     </div>
+                </div>
 
-                    <button type="reset" onClick={clear} className="btn btn-danger mt-2 shadow">Temizle</button>
-                    <button type="submit" onClick={TaskCreateSubmit} className="btn btn-primary mt-2 ms-2 shadow" disabled={multipleRequest}>
+                <div style={{ display: 'flex' }}>
+                    <button type="reset" onClick={clear} className="btn btn-danger mt-2 shadow">Clean</button>
+                    <button type="submit" onClick={TaskCreateSubmit} className="btn btn-primary mt-2 ms-2 shadow" style={{ backgroundColor: '#007bff' }} disabled={multipleRequest}>
                         {spinnerData()}
-                        Create
+                        Add New Task
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+            
+
 
             <br /><br />
             <h1 className="text-center display-5 mb-5">TodoLıst</h1>
             <table className='table table-striped table-responsive mb-5'>
-                <thead>
-                    <tr>
-                        <th>Task ID</th>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Completed</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
+               
                 <tbody>
                     {taskListData.map(data => (
                         <tr key={data.taskId}>
@@ -220,7 +221,7 @@ function TaskList() {
                                 />
                             </td>
                             <td>
-                                <i onClick={() => setUpdateTask(data)} className="fa-solid fa-pen-nib text-primary"></i>
+                                <i onClick={() => setUpdateTask(data)} className="fa-solid fa-pencil" style={{ color: "#FFD43B" }}></i> 
                             </td>
                             <td>
                                 <i onClick={() => setDeleteTask(data.taskId)} className="fa-solid fa-trash text-danger"></i>
