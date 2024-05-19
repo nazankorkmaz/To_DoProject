@@ -1,6 +1,6 @@
 package com.techcareer.To_DoProject.utils;
 
-public class Links {
+public class PersistURL {
 
 //    Backend Project Url  : http://localhost:4444/
 //    Frontend Project Url : http://localhost:3000/

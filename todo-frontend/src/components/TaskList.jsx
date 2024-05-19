@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form, Spinner } from 'react-bootstrap';
 import TaskApi from "../services/TaskApi";
 
@@ -193,7 +193,6 @@ function TaskList() {
 
             <br /><br />
             <h1 className="text-center display-5 mb-5">TodoLıst</h1>
-            <Link className='btn btn-primary me-2' to="/create">Create</Link>
             <table className='table table-striped table-responsive mb-5'>
                 <thead>
                     <tr>

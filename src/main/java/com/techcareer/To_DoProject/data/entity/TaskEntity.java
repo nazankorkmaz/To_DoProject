@@ -12,13 +12,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 // LOMBOK
-@Data  //burada getter setterlar var
-//@AllArgsConstructor  //Parametreli constructorler silinir
-@NoArgsConstructor   //parametresiz constructor silinir
-@Log4j2 //loglama için cağırılır
+@Data
+@NoArgsConstructor
+@Log4j2
 @Builder //design pattern yapısı için
 
-//ENTITY  ----> bununn database'e verileri eklmesi için çalışıcam
+//ENTITY  ----> bunun database'e verileri eklmesi için çalışıcam
 @Entity(name = "Tasks")
 @Table(name = "tasks")
 
@@ -36,13 +35,9 @@ public class TaskEntity implements Serializable {
     @Column(name = "task_name")
     private String taskName;
 
-    /*
-    @Column(name = "is_completed")
-    private boolean isCompleted;
-*/
+    // Task Completed
     @Column(name = "completed")
     private boolean completed;
-
 
 
     //System Created Date
@@ -70,7 +65,7 @@ public class TaskEntity implements Serializable {
         return String.format("TaskEntity{" +
                 "taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
-                ", isCompleted=" + completed +
+                ", completed=" + completed +
                 ", systemCreatedDate=" + systemCreatedDate +
                 '}');
     }

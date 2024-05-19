@@ -15,11 +15,11 @@ import java.util.Date;
 
 
 // LOMBOK
-@Data  //burada getter setterlar hashcode toString var
+@Data                 //burada getter setterlar hashcode toString var
 @AllArgsConstructor  //Parametreli constructorler silinir
 @NoArgsConstructor   //parametresiz constructor silinir
-@Log4j2 //loglama için cağırılır
-@Builder //design pattern yapısı için
+@Log4j2             //loglama için cağırılır
+@Builder            //design pattern yapısı için
 
 
 public class TaskDto implements Serializable {
@@ -36,7 +36,7 @@ public class TaskDto implements Serializable {
     @Size(min = 2, max = 100, message = "Gorev 2-100 karakter olmalı!")
     private String taskName;
 
-    //private boolean isCompleted;
+
     private boolean completed;
 
     private Date systemCreatedDate;

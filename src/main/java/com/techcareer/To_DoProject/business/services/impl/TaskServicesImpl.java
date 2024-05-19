@@ -23,7 +23,7 @@ import java.util.List;
 @Log4j2
 
 @Service
-@Component("taskServicesImpl")   //spring tarafından // springin bir parçasısın artık demek
+@Component("taskServicesImpl")   //spring tarafından springin bir parçasısın artık demek
 public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
 
@@ -45,8 +45,8 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
     }
 
-    @Override   // database'e veri eklerken bu methot çağırılır
-    @Transactional// Create,Update,Delete
+    @Override        // database'e veri eklerken bu methot çağırılır
+    @Transactional  // Create,Update,Delete
     public TaskDto taskServiceCreate(TaskDto taskDto) {
 
         TaskEntity roleEntity1;
@@ -77,14 +77,12 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
             taskDtoList.add(taskDto1);  // bu yeni listeye ekle
         }
         return taskDtoList;
-        //return List.of();
     }
 
     @Override
     public TaskDto taskServiceFindById(Long id) {
         Boolean booleanRoleEntityFindById = taskRepository.findById(id).isPresent();
         TaskEntity taskEntity = null;
-        //if(id!=null){
         if (booleanRoleEntityFindById) {
             taskEntity = taskRepository.findById(id).orElseThrow(
                     () -> new ResourceNotFoundException("Task", "id", id)
@@ -97,16 +95,7 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
     @Override
     public TaskDto taskServiceUpdateById(Long id, TaskDto taskDto) {
-        /*
-        TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
-        task.setTaskName(taskDto.getTaskName());
-        task.setCompleted(taskDto.isCompleted());
 
-        TaskEntity updatedTask = taskRepository.save(task);
-
-        return entityToDto(updatedTask);
-
-         */
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         task.setTaskName(taskDto.getTaskName());
