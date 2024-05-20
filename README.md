@@ -24,9 +24,7 @@ update, delete and add them. It will help you keep track of your tasks easily.
 - RESPONSIVE DESIGN
 - JS
 - BOOTSTRAP5
-- JQUERY
 - JAVASCRIPT
-- SQL
 - H2DB
 
 -----
@@ -36,7 +34,6 @@ update, delete and add them. It will help you keep track of your tasks easily.
 - Validation
 - Model Mapper
 - H2DB
-- SQL
 - JAVA CORE
 - SPRING FRAMEWORK
 - SPRING BOOT
@@ -52,5 +49,11 @@ update, delete and add them. It will help you keep track of your tasks easily.
 | H2-CONSOLE| [H2][http://localhost:4444/h2-console] |
 | SWAGGER| [API DOCUMENT][http://localhost:4444/swagger-ui.html] |
 
+### TODO-UI
+![GitHub Logo](https://github.com/nazankorkmaz/To_DoProject/blob/master/sunum_dosyalari/ui.png)
+
 ### SWAGGER-UI
-![GitHub Logo](https://github.com/nazankorkmaz/To_DoProject/blob/master/swgger.png?raw=true)
+![GitHub Logo](https://github.com/nazankorkmaz/To_DoProject/blob/master/sunum_dosyalari/swgger.png)
+
+### POSTMAN
+![GitHub Logo](https://github.com/nazankorkmaz/To_DoProject/blob/master/sunum_dosyalari/postmans.png)
