@@ -20,8 +20,6 @@ import java.util.Date;
 @NoArgsConstructor   //parametresiz constructor silinir
 @Log4j2             //loglama için cağırılır
 @Builder            //design pattern yapısı için
-
-
 public class TaskDto implements Serializable {
 
     // Serilestirme icin
@@ -39,6 +37,4 @@ public class TaskDto implements Serializable {
     private boolean completed;
 
     private Date systemCreatedDate;
-
-
 }

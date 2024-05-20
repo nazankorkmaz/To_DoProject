@@ -17,7 +17,6 @@ import java.util.Date;
 //ENTITY  ----> bunun database'e verileri eklmesi için çalışıcam
 @Entity(name = "Tasks")
 @Table(name = "tasks")
-
 public class TaskEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
