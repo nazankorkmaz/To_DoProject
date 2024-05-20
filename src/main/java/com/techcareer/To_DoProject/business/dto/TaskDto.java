@@ -36,7 +36,6 @@ public class TaskDto implements Serializable {
     @Size(min = 2, max = 100, message = "Gorev 2-100 karakter olmalı!")
     private String taskName;
 
-
     private boolean completed;
 
     private Date systemCreatedDate;

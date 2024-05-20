@@ -1,6 +1,5 @@
 package com.techcareer.To_DoProject.data.repository;
 
-
 import com.techcareer.To_DoProject.data.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

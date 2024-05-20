@@ -14,10 +14,13 @@ function TaskList() {
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
 
+    // bileşen oluşturulduğunda bir kez çağrılır
+    //bileşenin ilk render edildiğinde görev listesini almak için bir HTTP isteği yapar.
     useEffect(() => {
         fetchTaskList();
     }, []);
-//
+
+    //İstek başarılı olursa, görev listesini state değişkenine (taskListData) kaydeder.
     const fetchTaskList = async () => {
         try {
             const response = await TaskApi.taskApiList();
@@ -33,12 +36,14 @@ function TaskList() {
         setShowModal(true);
     };
 
+    //modal penceresini kapatmak için kullanılı
     const handleClose = () => {
         setShowModal(false);
         setTaskName('');
         setSelectedTask(null);
     };
 
+    // değişiklikleri kaydetmek
     const handleSaveChanges = async () => {
         if (!selectedTask) return;
 
@@ -65,6 +70,8 @@ function TaskList() {
         }
     };
 
+    //belirli bir görevi silmek
+    // silmek istediği görevin ID'si hakkında bir onay iletişim kutusu görüntülenir.
     const setDeleteTask = async (taskId) => {
         if (window.confirm(`${taskId} id datayı silmek istiyor musunuz ?`)) {
             try {
@@ -83,6 +90,7 @@ function TaskList() {
         }
     };
 
+    // belirli bir görevin tamamlanma durumunu değiştirmek
     const toggleTaskCompletion = async (taskId, completed) => {
         const task = taskListData.find(task => task.taskId === taskId);
         if (task) {
@@ -102,19 +110,23 @@ function TaskList() {
         }
     };
 
+    // görev adı girdisini temizlemek
     const clear = () => {
         setTaskName('');
     };
 
+    // fonksiyon görev adı girdisi değiştiğinde
     const taskNameOnChange = (event) => {
         const { value } = event.target;
         setTaskName(value);
     };
 
+    // görev oluşturma formunun gönderilmesini engellemek
     const onSubmitForm = (event) => {
         event.preventDefault();
     };
 
+    //yeni bir görev
     const TaskCreateSubmit = async () => {
         const taskObject = {
             taskName,
@@ -145,6 +157,7 @@ function TaskList() {
         }
     };
 
+    // yüklenme durumu
     const spinnerData = () => {
         if (spinner) {
             return (
@@ -156,6 +169,7 @@ function TaskList() {
         return "";
     };
 
+    // girdi alanının hata durumunu kontrol etmek
     const inputInvalidErrorClass = error ? "form-control is-invalid" : "form-control";
 
     return (

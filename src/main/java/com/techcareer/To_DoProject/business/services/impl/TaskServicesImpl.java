@@ -39,6 +39,8 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         return modelMapperBeanClass.modelMapperMethod().map(taskDto, TaskEntity.class);
     }
 
+    //bir DTO'yu -> entity'ye ,  veritabanına kaydeder ve ardından güncellenmiş bilgileri içeren DTO'yu geri döndürür.
+
     @Override        // database'e veri eklerken bu methot çağırılır
     @Transactional  // Create,Update,Delete
     public TaskDto taskServiceCreate(TaskDto taskDto) {
@@ -54,6 +56,8 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         return taskDto;
     }
 
+    //veritabanındaki tüm TaskEntity nesnelerini TaskDto nesnelerine dönüştürerek bir liste halinde geri döner.
+
     @Override
     public List<TaskDto> taskServiceList() {
         //Entity List
@@ -67,6 +71,10 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         }
         return taskDtoList;
     }
+
+    //verilen bir ID ile veritabanından bir TaskEntity nesnesini bulur
+    // ve bu entity'yi TaskDto nesnesine dönüştürerek geri döner.
+    // belirtilen ID'ye sahip bir entity bulunamadığında bir istisna (exception) fırlatır.
 
     @Override
     public TaskDto taskServiceFindById(Long id) {
@@ -82,6 +90,9 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         return entityToDto(taskEntity);
     }
 
+    // verilen bir ID'ye sahip TaskEntity nesnesini günceller
+    // güncellenmiş entity'yi TaskDto nesnesine dönüştürerek geri döner.
+
     @Override
     public TaskDto taskServiceUpdateById(Long id, TaskDto taskDto) {
         TaskEntity task = taskRepository.findById(id)
@@ -92,11 +103,17 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         return entityToDto(updatedTask);
     }
 
+    //verilen bir ID'ye sahip TaskEntity nesnesini veritabanından siler.
+    // belirtilen ID'ye sahip bir entity bulunamazsa bir istisna (exception) fırlatır.
+
     @Override
     public void taskServiceDeleteById(Long id) {
         TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         taskRepository.delete(task);
     }
+
+    //verilen bir ID'ye sahip TaskEntity nesnesinin tamamlanma durumunu günceller
+    // güncellenmiş entity'yi TaskDto nesnesine dönüştürerek geri döner.
 
     @Override
     @Transactional

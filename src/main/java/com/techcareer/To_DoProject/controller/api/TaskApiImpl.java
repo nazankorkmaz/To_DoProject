@@ -28,7 +28,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
     // Error
     private ApiResult apiResult;
 
-    // CREATE (Api)
+    // CREATE (Api) --> HTTP POST isteği ile /create endpoint'ine gelen bir görevi oluşturmayı sağlar
     // http://localhost:4444/api/v1.0.0/create
     @PostMapping("/create")
     @Override
@@ -57,6 +57,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.status(201).body(taskCreateApi);
     }
 
+    // HTTP GET isteği ile /list endpoint'ine gelen görev listesini alma işlemini gerçekleştirir.
     @GetMapping("/list")
     @Override
     public ResponseEntity<List<TaskDto>> taskApiList() {
@@ -64,6 +65,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.ok(iTaskService.taskServiceList());
     }
 
+    //  HTTP GET isteği ile /find veya /find/{id} endpoint'lerine gelen bir görevi bulma işlemini gerçekleştirir.
     @GetMapping({"/find","/find/{id}"})
     @Override
     public ResponseEntity<?> taskApiFindById(@PathVariable(name="id",required = false) Long id) {
@@ -76,13 +78,14 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
                     .message("Task Dto bulunmadı")
                     .path("localhost:4444/api/v1.0.0/find")
                     .createdDate(new Date(System.currentTimeMillis()))
-                    .build();
+                    .build();               //builder nesnesinden nihai nesneyi oluşturur ve geri döndürür.
             return ResponseEntity.status(404).body(apiResultFind);
         }
         log.info("Task Api bulundu");
         return ResponseEntity.ok(iTaskService.taskServiceFindById(id));
     }
 
+    // HTTP PUT isteği ile /update veya /update/{id} endpoint'lerine gelen bir görevi güncelleme işlemini gerçekleştirir.
     @Override
     @PutMapping({"/update","/update/{id}"})
     public ResponseEntity<?> taskApiUpdateById(@PathVariable(name="id",required = false)Long id, @Valid @RequestBody TaskDto taskDto) {
@@ -101,6 +104,7 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.ok(taskUpdateApi);
     }
 
+    //HTTP DELETE isteği ile /delete veya /delete/{id} endpoint'lerine gelen bir görevi silme işlemini gerçekleştirir.
     @Override
     @DeleteMapping({"/delete","/delete/{id}"})
     public ResponseEntity<String> taskApiDeleteById(@PathVariable(name="id",required = false)Long id) {
@@ -108,6 +112,8 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return new ResponseEntity<>("Task silindi.", HttpStatus.OK);
     }
 
+    //HTTP PUT isteği ile /update/completion/{id} endpoint'ine gelen bir görevin tamamlanma durumunu güncelleme
+    // işlemini gerçekleştirir.
     @Override
     @PutMapping("/update/completion/{id}")
     public ResponseEntity<?> updateTaskCompletionStatus(@PathVariable(name="id") Long id, @RequestBody boolean isCompleted,@Valid @RequestBody TaskDto taskDto) {
