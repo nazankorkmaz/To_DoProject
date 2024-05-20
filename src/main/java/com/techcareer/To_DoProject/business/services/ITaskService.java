@@ -5,15 +5,11 @@ import java.util.List;
 // D: Dto
 // E: Entity
 public interface ITaskService <D, E>{
-
     // MODEL MAPPER
-
     public D entityToDto(E e);
     public E dtoToEntity(D d);
 
-
-    // ROLE CRUD
-
+    // TASK CRUD
     public D taskServiceCreate(D d);
 
     public List<D> taskServiceList();

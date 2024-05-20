@@ -46,11 +46,9 @@ function TaskList() {
             ...selectedTask,
             taskName,
         };
-
         setError(null);
         setSpinner(true);
         setMultipleRequest(true);
-
         try {
             const response = await TaskApi.taskApiUpdateById(selectedTask.taskId, updatedTask);
             if (response.status === 200) {
@@ -123,7 +121,6 @@ function TaskList() {
             completed: false,
             createdAt: new Date().toISOString()
         };
-
         setError(null);
         setSpinner(true);
         setMultipleRequest(true);
@@ -168,7 +165,8 @@ function TaskList() {
                 <div className="card-body">
                     <h1 className="text-center display-5 mb-5">TodoInput</h1>
                         <form onSubmit={onSubmitForm}>
-                        <div className="form-group" style={{ padding: '8px', borderRadius: '5px', border: '1px solid #dee2e6' }}>
+                        <div className="form-group" style={{ padding: '8px', borderRadius: '5px',
+                            border: '1px solid #dee2e6' }}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa-solid fa-book" style={{ marginRight: '8px' }} />
                         <input
@@ -181,30 +179,26 @@ function TaskList() {
                             required={true}
                             onChange={taskNameOnChange}
                             value={taskName}
-                            style={{  flex: 1, backgroundColor: 'transparent' }}
-                        />
+                            style={{  flex: 1, backgroundColor: 'transparent' }}/>
                     </div>
                 </div>
-
                 <div style={{ display: 'flex' }}>
                     <button type="reset" onClick={clear} className="btn btn-danger mt-2 shadow">Clean</button>
-                    <button type="submit" onClick={TaskCreateSubmit} className="btn btn-primary mt-2 ms-2 shadow" style={{ backgroundColor: '#007bff' }} disabled={multipleRequest}>
+                    <button type="submit" onClick={TaskCreateSubmit} className="btn btn-primary mt-2 ms-2 shadow"
+                            style={{ backgroundColor: '#007bff' }} disabled={multipleRequest}>
                         {spinnerData()}
                         Add New Task
                     </button>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-            
+                        </form>
+                    </div>
+                </div>
+            </div>
 
 
             <br /><br />
             <h1 className="text-center display-5 mb-5">TodoLıst</h1>
             <table className='table table-striped table-responsive mb-5'>
-               
                 <tbody>
                     {taskListData.map(data => (
                         <tr key={data.taskId}>
@@ -221,7 +215,8 @@ function TaskList() {
                                 />
                             </td>
                             <td>
-                                <i onClick={() => setUpdateTask(data)} className="fa-solid fa-pencil" style={{ color: "#FFD43B" }}></i> 
+                                <i onClick={() => setUpdateTask(data)} className="fa-solid fa-pencil"
+                                   style={{ color: "#FFD43B" }}></i>
                             </td>
                             <td>
                                 <i onClick={() => setDeleteTask(data.taskId)} className="fa-solid fa-trash text-danger"></i>

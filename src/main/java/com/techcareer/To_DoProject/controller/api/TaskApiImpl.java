@@ -1,6 +1,5 @@
 package com.techcareer.To_DoProject.controller.api;
 
-
 import com.techcareer.To_DoProject.business.dto.TaskDto;
 import com.techcareer.To_DoProject.business.services.ITaskService;
 import com.techcareer.To_DoProject.controller.ITaskApi;
@@ -12,11 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.List;
-
-
 
 // Lombok
 @RequiredArgsConstructor
@@ -26,24 +22,18 @@ import java.util.List;
 @RequestMapping("/api/v1.0.0")
 @CrossOrigin //CORS: Hatası
 public class TaskApiImpl implements ITaskApi<TaskDto> {
-
-
     // Injection
     @Qualifier("taskServicesImpl")
     private final ITaskService iTaskService;
-
     // Error
     private ApiResult apiResult;
-
 
     // CREATE (Api)
     // http://localhost:4444/api/v1.0.0/create
     @PostMapping("/create")
     @Override
     public ResponseEntity<?> taskApiCreate(@RequestBody TaskDto taskDto) {
-
-        TaskDto taskCreateApi =(TaskDto) iTaskService.taskServiceCreate(taskDto);//.taskServiceCreate(taskDto);
-
+        TaskDto taskCreateApi =(TaskDto) iTaskService.taskServiceCreate(taskDto);
         if (taskCreateApi == null) {
             ApiResult apiResultCreate = ApiResult.builder()
                     .status(404)
@@ -67,14 +57,12 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.status(201).body(taskCreateApi);
     }
 
-
     @GetMapping("/list")
     @Override
     public ResponseEntity<List<TaskDto>> taskApiList() {
         log.info("Task Api Listelendi");
         return ResponseEntity.ok(iTaskService.taskServiceList());
     }
-
 
     @GetMapping({"/find","/find/{id}"})
     @Override
@@ -95,11 +83,9 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.ok(iTaskService.taskServiceFindById(id));
     }
 
-
     @Override
     @PutMapping({"/update","/update/{id}"})
     public ResponseEntity<?> taskApiUpdateById(@PathVariable(name="id",required = false)Long id, @Valid @RequestBody TaskDto taskDto) {
-
         TaskDto taskUpdateApi = ( TaskDto)iTaskService.taskServiceUpdateById(id, taskDto);
         if (taskUpdateApi == null) {
             ApiResult apiResultFind = ApiResult.builder()
@@ -115,14 +101,12 @@ public class TaskApiImpl implements ITaskApi<TaskDto> {
         return ResponseEntity.ok(taskUpdateApi);
     }
 
-
     @Override
     @DeleteMapping({"/delete","/delete/{id}"})
     public ResponseEntity<String> taskApiDeleteById(@PathVariable(name="id",required = false)Long id) {
         iTaskService.taskServiceDeleteById(id);
         return new ResponseEntity<>("Task silindi.", HttpStatus.OK);
     }
-
 
     @Override
     @PutMapping("/update/completion/{id}")

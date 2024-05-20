@@ -1,13 +1,11 @@
 package com.techcareer.To_DoProject.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,7 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Log4j2
 @Builder //design pattern yapısı için
-
 //ENTITY  ----> bunun database'e verileri eklmesi için çalışıcam
 @Entity(name = "Tasks")
 @Table(name = "tasks")
@@ -24,7 +21,6 @@ import java.util.Date;
 public class TaskEntity implements Serializable {
 
     public static final Long serialVersionUID = 1L;
-
     // Task Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // ıd'nin artarak devam etmesini sağlar
@@ -38,7 +34,6 @@ public class TaskEntity implements Serializable {
     // Task Completed
     @Column(name = "completed")
     private boolean completed;
-
 
     //System Created Date
     @CreationTimestamp
@@ -55,7 +50,6 @@ public class TaskEntity implements Serializable {
     public boolean isCompleted() {
         return completed;
     }
-
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }

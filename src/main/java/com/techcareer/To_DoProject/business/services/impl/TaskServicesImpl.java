@@ -21,34 +21,27 @@ import java.util.List;
 // Lombok
 @RequiredArgsConstructor
 @Log4j2
-
 @Service
 @Component("taskServicesImpl")   //spring tarafından springin bir parçasısın artık demek
 public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
-
     @Autowired
     private final TaskRepository taskRepository;
-
     private final ModelMapperBeanClass modelMapperBeanClass;
-
 
     @Override
     public TaskDto entityToDto(TaskEntity taskEntity) {
         return modelMapperBeanClass.modelMapperMethod().map(taskEntity, TaskDto.class);
-
     }
 
     @Override
     public TaskEntity dtoToEntity(TaskDto taskDto) {
         return modelMapperBeanClass.modelMapperMethod().map(taskDto, TaskEntity.class);
-
     }
 
     @Override        // database'e veri eklerken bu methot çağırılır
     @Transactional  // Create,Update,Delete
     public TaskDto taskServiceCreate(TaskDto taskDto) {
-
         TaskEntity roleEntity1;
         // Dto => Entity çevirmek
         roleEntity1 = dtoToEntity(taskDto);
@@ -59,18 +52,14 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         taskDto.setTaskId(roleEntity2.getTaskId());
         taskDto.setSystemCreatedDate(roleEntity2.getSystemCreatedDate());
         return taskDto;
-
     }
 
     @Override
     public List<TaskDto> taskServiceList() {
-
         //Entity List
         List<TaskEntity> taskEntityList1 = taskRepository.findAll(); // listeyi çağırdı
-
         // Dto List
         List<TaskDto> taskDtoList = new ArrayList<>();
-
         // Entity To Dto List
         for (TaskEntity tempEntity : taskEntityList1) {
             TaskDto taskDto1 = entityToDto(tempEntity); //oncekini tek tek alıp
@@ -95,7 +84,6 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
 
     @Override
     public TaskDto taskServiceUpdateById(Long id, TaskDto taskDto) {
-
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
         task.setTaskName(taskDto.getTaskName());
@@ -119,7 +107,5 @@ public class TaskServicesImpl implements ITaskService<TaskDto, TaskEntity> {
         TaskEntity updatedTask = taskRepository.save(task);
         return entityToDto(updatedTask);
     }
-
-
 }
 

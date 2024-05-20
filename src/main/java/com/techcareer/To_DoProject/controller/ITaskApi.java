@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ITaskApi <D>{
-
-
     // TASK CRUD
 
     public ResponseEntity<?> taskApiCreate(D d);
